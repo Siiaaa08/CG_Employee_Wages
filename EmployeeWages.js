@@ -1,12 +1,15 @@
 
-const num=20;
-let emphr=0;
+const maxHrMonth=100;
+const maxDays=10;
+let totalempHr=0;
+const perhr=20;
 var part=1;
 var full=2;
 
 var parthr=4;
 var fullhr=8;
-var perhr=20;
+
+let totalWorkDay=0;
 function getWork(empcheck){
     switch(empcheck){
         case part:
@@ -20,9 +23,11 @@ function getWork(empcheck){
         
     }}
 
-for(let day=0;day<num;day++){
+while(totalempHr<=maxHrMonth&&totalWorkDay<maxDays){
+    totalWorkDay++;
     let empcheck=Math.floor(Math.random()*10)%3;
-    emphr+=getWork(empcheck);
+    totalempHr+=getWork(empcheck);
 }
-let empWage=emphr*perhr;
-console.log("Total Hrs :- "+emphr+" Emp Wages :- "+empWage);
+
+let empWage=totalempHr*perhr;
+console.log("Total Days :- "+totalWorkDay+" Total Hrs :- "+totalempHr+" Emp Wage :- "+empWage);

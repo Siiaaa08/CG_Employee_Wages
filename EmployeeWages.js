@@ -1,10 +1,24 @@
 
-const absent=0;
+const part=1;
+const full=2;
 
-let emp=Math.floor(Math.random()*10)%2;
-if(emp==absent){
-    console.log("Employee is Absent");
+const parthr=4;
+const fullhr=8;
+const perhr=20;
+
+let emphr=0;
+empcheck=Math.floor(Math.random()*10)%3;
+switch(empcheck){
+    case part:
+        emphr=parthr;
+        break;
+    case full:
+        emphr=fullhr;
+    break;
+    default:
+        emphr=0;
+        break;
 }
-else{
-    console.log("Employee is Present");
-}
+
+let empwage=emphr*perhr;
+console.log("Emp Wage :- "+empwage);

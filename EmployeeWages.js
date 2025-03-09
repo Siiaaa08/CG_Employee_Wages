@@ -11,8 +11,7 @@ const numWorkingDays = 20;
 
 let totalEmpHrs = 0;
 let totalWorkingDays = 0;
-let empDailyWageMap = new Map();
-let empDailyHoursMap = new Map();
+let empDailyRecords = []; 
 
 function calcDailyWage(empHrs) {
     return empHrs * WagePerHr;
@@ -36,25 +35,29 @@ while (totalEmpHrs <= maxHrMonth && totalWorkingDays < numWorkingDays) {
     totalEmpHrs += empHrs;
 
     let dailyWage = calcDailyWage(empHrs);
-    
-    empDailyWageMap.set(totalWorkingDays, dailyWage);
-    empDailyHoursMap.set(totalWorkingDays, empHrs);
+
+    // data 
+    empDailyRecords.push({
+        day: totalWorkingDays,
+        hoursWorked: empHrs,
+        wageEarned: dailyWage
+    });
 }
 
 // a
-let totalWageFromMap = Array.from(empDailyWageMap.values()).reduce((total, wage) => total + wage, 0);
-let totalHoursFromMap = Array.from(empDailyHoursMap.values()).reduce((total, hours) => total + hours, 0);
-console.log(`Total Employee Wage: ${totalWageFromMap}, Total Hours Worked: ${totalHoursFromMap}`);
+let totalWage = empDailyRecords.reduce((total, record) => total + record.wageEarned, 0);
+let totalHours = empDailyRecords.reduce((total, record) => total + record.hoursWorked, 0);
+console.log(`Total Employee Wage: ${totalWage}, Total Hours Worked: ${totalHours}`);
 
 // b
-let fullWorkingDays = [], partWorkingDays = [], noWorkingDays = [];
-
-empDailyHoursMap.forEach((hours, day) => {
-    if (hours === fullTimeHr) fullWorkingDays.push(day);
-    else if (hours === partTimeHr) partWorkingDays.push(day);
-    else noWorkingDays.push(day);
-});
+let fullWorkingDays = empDailyRecords.filter(record => record.hoursWorked === fullTimeHr).map(record => record.day);
+let partWorkingDays = empDailyRecords.filter(record => record.hoursWorked === partTimeHr).map(record => record.day);
+let noWorkingDays = empDailyRecords.filter(record => record.hoursWorked === 0).map(record => record.day);
 
 console.log("Full Working Days:", fullWorkingDays);
 console.log("Part Working Days:", partWorkingDays);
 console.log("No Working Days:", noWorkingDays);
+
+// c
+console.log("Day-wise Records:");
+console.table(empDailyRecords);

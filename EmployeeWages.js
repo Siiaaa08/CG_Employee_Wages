@@ -36,7 +36,6 @@ while (totalEmpHrs <= maxHrMonth && totalWorkingDays < numWorkingDays) {
 
     let dailyWage = calcDailyWage(empHrs);
 
-    // data 
     empDailyRecords.push({
         day: totalWorkingDays,
         hoursWorked: empHrs,
@@ -50,14 +49,20 @@ let totalHours = empDailyRecords.reduce((total, record) => total + record.hoursW
 console.log(`Total Employee Wage: ${totalWage}, Total Hours Worked: ${totalHours}`);
 
 // b
-let fullWorkingDays = empDailyRecords.filter(record => record.hoursWorked === fullTimeHr).map(record => record.day);
-let partWorkingDays = empDailyRecords.filter(record => record.hoursWorked === partTimeHr).map(record => record.day);
-let noWorkingDays = empDailyRecords.filter(record => record.hoursWorked === 0).map(record => record.day);
+console.log("Full Working Days:");
+empDailyRecords.forEach(record => {
+    if (record.hoursWorked === fullTimeHr) console.log(`Day ${record.day}`);
+});
 
-console.log("Full Working Days:", fullWorkingDays);
-console.log("Part Working Days:", partWorkingDays);
+//c
+let partWorkingDaysStr = empDailyRecords
+    .filter(record => record.hoursWorked === partTimeHr)
+    .map(record => `Day ${record.day}`)
+    .reduce((str, day) => str + day + ", ", "");
+console.log("Part Working Days:", partWorkingDaysStr.slice(0, -2)); // Removing last comma
+
+// d
+let noWorkingDays = empDailyRecords
+    .map(record => record.hoursWorked === 0 ? `Day ${record.day}` : null)
+    .filter(day => day !== null);
 console.log("No Working Days:", noWorkingDays);
-
-// c
-console.log("Day-wise Records:");
-console.table(empDailyRecords);

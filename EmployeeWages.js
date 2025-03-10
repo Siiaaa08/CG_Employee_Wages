@@ -9,6 +9,9 @@ var full=2;
 var parthr=4;
 var fullhr=8;
 
+function calcDailyWage(emphr){
+    return emphr*perhr;
+}
 let totalWorkDay=0;
 function getWork(empcheck){
     switch(empcheck){
@@ -22,11 +25,13 @@ function getWork(empcheck){
           return 0;
         
     }}
-
+let empDaily=[];
 while(totalempHr<=maxHrMonth&&totalWorkDay<maxDays){
     totalWorkDay++;
     let empcheck=Math.floor(Math.random()*10)%3;
-    totalempHr+=getWork(empcheck);
+    let emphr=getWork(empcheck);
+    totalempHr+=emphr;
+    empDaily.push(calcDailyWage(totalempHr));
 }
 
 let empWage=totalempHr*perhr;
